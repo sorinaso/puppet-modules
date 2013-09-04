@@ -17,14 +17,14 @@ define apache::vhost($ensure=present, $content = undef, $file = undef) {
       ensure  => $ensure_file,
       mode    => '644',
       source  => $file,
-      #notify => Exec['apache-restart'],
+      notify  => Service[$apache::service],
     }
   } elsif $content != undef {
     file { "/etc/apache2/sites-available/${name}":
       ensure  => $ensure_file,
       mode    => '644',
       content => $content,
-      #notify => Exec['apache-restart'],
+      notify  => Service[$apache::service],
     }
   } else {
     fail("apache::vhost must receive file path or content to fill the vhost entry.")
