@@ -1,0 +1,1 @@
+include admin::rake::admin_tasks

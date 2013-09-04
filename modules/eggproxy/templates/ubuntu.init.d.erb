@@ -1,0 +1,24 @@
+#!/bin/bash
+# Eggproxy Service script v1.0
+# USAGE: start|stop|status|logs
+#
+case "$1" in
+start)
+echo "Starting eggproxy."
+<%= scope.lookupvar('eggproxy::params::run_script_path') %> &
+;;
+stop)
+echo "Stopping eggproxy."
+killall eggproxy_run
+;;
+status)
+# Check to see if the process is running
+ps aux|grep -i eggproxy_run
+;;
+
+*)
+echo “LifeRay Web Portal Service”
+echo $”Usage: $0 {start|stop|status}”
+exit 1
+esac
+exit 0

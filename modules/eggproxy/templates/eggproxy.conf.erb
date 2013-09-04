@@ -1,0 +1,6 @@
+[eggproxy]
+eggs_directory = <%= scope.lookupvar('eggproxy::params::cache_directory') %>
+#update_interval = 24
+index = <%= scope.lookupvar('eggproxy::pypi_index') %>
+host = <%= scope.lookupvar('eggproxy::bind_address') %>
+port = <%= scope.lookupvar('eggproxy::port') %>

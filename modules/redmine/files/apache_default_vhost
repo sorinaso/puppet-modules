@@ -1,0 +1,5 @@
+<VirtualHost *:80>
+    DocumentRoot "/usr/share/redmine/public"
+    PassengerResolveSymlinksInDocumentRoot on
+    Options Indexes ExecCGI FollowSymLinks
+</VirtualHost>

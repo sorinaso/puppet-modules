@@ -1,0 +1,2 @@
+* Sacar la version del .gem y soportar distintas versiones de gem.
+* Hacer test de unidad(rspec-puppet)
