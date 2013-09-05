@@ -1,0 +1,17 @@
+FORGE
+  remote: http://forge.puppetlabs.com
+  specs:
+    jtopjian/acng (1.0.0)
+    puppetlabs/apt (1.2.0)
+      puppetlabs/stdlib (>= 2.2.1)
+    puppetlabs/ntp (1.0.0-rc1)
+      puppetlabs/stdlib (>= 0.1.6)
+    puppetlabs/stdlib (4.1.0)
+    saz/timezone (1.1.0)
+
+DEPENDENCIES
+  jtopjian/acng (= 1.0.0)
+  puppetlabs/apt (= 1.2.0)
+  puppetlabs/ntp (= 1.0.0)
+  saz/timezone (= 1.1.0)
+

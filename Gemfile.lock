@@ -1,0 +1,36 @@
+PATH
+  remote: /home/sorin/mis_proyectos/ruby/rake-admin
+  specs:
+    rake-admin (0.0.2)
+      highline
+      log4r (~> 1.1.10)
+      net-ssh
+      rake
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    facter (1.6.18)
+    hiera (1.2.0)
+      json_pure
+    highline (1.6.19)
+    json (1.8.0)
+    json_pure (1.7.7)
+    librarian-puppet (0.9.10)
+      json
+      thor (~> 0.15)
+    log4r (1.1.10)
+    net-ssh (2.6.8)
+    puppet (3.1.1)
+      facter (~> 1.6)
+      hiera (~> 1.0)
+    rake (10.1.0)
+    thor (0.18.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  librarian-puppet
+  puppet
+  rake-admin!

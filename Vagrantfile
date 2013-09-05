@@ -1,4 +1,4 @@
-  Vagrant::Config.run do |config|
+Vagrant::Config.run do |config|
   config.vm.define :puppet_testing do |puppet_testing|
     puppet_testing.vm.customize ["modifyvm", :id, "--name", "puppet_testing"]
     puppet_testing.vm.box = 'base_puppet_testing'
@@ -9,7 +9,7 @@
     puppet_testing.vm.provision :puppet do |puppet|
       puppet.manifests_path = "./manifests"
       puppet.manifest_file = "site.pp"
-      puppet.module_path  = "./modules"
+      puppet.module_path  = ["./modules", "./external_modules"]
       puppet.options = '--show_diff'
       puppet.options << ' --verbose --debug' if ENV['PUPPET_DEBUG']
       puppet.options << ' --noop' if ENV['PUPPET_NOOP']
