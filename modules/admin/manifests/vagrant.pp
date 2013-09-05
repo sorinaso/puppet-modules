@@ -1,19 +1,22 @@
 class admin::vagrant::puppet_master(
-$puppet_etc = '/etc/puppet',
-$host_puppet_dir = '/mnt/puppet_host',
-$user = 'root'
+$etcdir = '/etc/puppet',
+$logdir ='/var/log/puppet',
+$vardir ='/var/lib/puppet',
+$rundir ='/var/run/puppet'
 ) {
 
   include puppet::master
 
-  file { '/etc/puppet/puppet.conf':
+  $ssldir="${vardir}/ssl"
+
+  file { "${etcdir}/puppet.conf":
     content =>
 "[main]
-logdir=/var/log/puppet
-vardir=/var/lib/puppet
-ssldir=/var/lib/puppet/ssl
-rundir=/var/run/puppet
-factpath=\$vardir/lib/facter
+logdir=${logdir}
+vardir=${vardir}
+ssldir=\$vardir/ssl
+rundir=${rundir}
+factpath=\$vardir/facter
 templatedir=\$confdir/templates
 modulepath=/tmp/vagrant-puppet/modules-0:/tmp/vagrant-puppet/modules-1
 manifestdir=/tmp/vagrant-puppet/manifests
