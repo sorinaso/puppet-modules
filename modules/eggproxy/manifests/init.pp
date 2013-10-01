@@ -20,7 +20,7 @@ $port=8888) {
     ensure    => '74c262a025993e7dc2074462429f51d38517172c',
     provider  => 'pip',
     source    => 'git+git://github.com/camptocamp/collective.eggproxy.git',
-    require   => [Package[$eggproxy::params::dependencies], Packages[$pip_bug_packages]],
+    require   => [Package[$eggproxy::params::dependencies], Package[$pip_bug_packages]],
   }
 
   file { $eggproxy::params::cache_directory:
