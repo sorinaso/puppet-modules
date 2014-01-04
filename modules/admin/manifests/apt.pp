@@ -1,4 +1,5 @@
 class admin::apt($auto_update = true) {
+  include apt
 
   if $auto_update {
     # apt-get update before package instalation.
