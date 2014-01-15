@@ -93,9 +93,9 @@ class supervisor(
   }
 
   service { $supervisor::params::system_service:
-    ensure     => $service_ensure_real,
-    enable     => $service_enable,
-    hasrestart => true,
-    require    => File[$supervisor::params::conf_file],
+    ensure  => $service_ensure_real,
+    enable  => $service_enable,
+    restart => "/usr/bin/supervisorctl reload",
+    require => File[$supervisor::params::conf_file],
   }
 }
