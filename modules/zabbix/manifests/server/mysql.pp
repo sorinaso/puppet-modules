@@ -8,8 +8,6 @@ $migrate_initial_data = true) {
 
   $mysql_cmd = "/usr/bin/mysql -u ${database_user} -p'${database_password}' ${database_name}"
 
-  ensure_resource('package', $zabbix::params::mysql_server_required_packages)
-
   if $migrate_initial_data {
     exec { 'zabbix::server::mysql::migrate_schema':
       command => "${mysql_cmd} < schema.sql && /bin/cp schema.sql schema.sql.migrated",

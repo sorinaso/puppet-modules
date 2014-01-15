@@ -43,9 +43,6 @@ class zabbix::params {
     $server_service_module = 'zabbix::server::service::ubuntu'
     $server_log_file = "${log_path}/zabbix_server.log"
 
-    # Mysql server.
-    $mysql_server_required_packages = ['mysql-client']
-
     # PHP Frontend paths.
     $php_frontend_apache_conf_file = '/etc/apache2/conf.d/zabbix.conf'
     $php_frontend_apache_conf_file_template = "zabbix/frontends/php/apache.conf.erb"
