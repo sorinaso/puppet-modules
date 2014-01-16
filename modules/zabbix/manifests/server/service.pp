@@ -4,6 +4,7 @@ class zabbix::server::service {
 
   service { 'zabbix_server':
     enable  => true,
+    ensure  => running,
     require => Class[$zabbix::params::server_service_module],
   }
 }

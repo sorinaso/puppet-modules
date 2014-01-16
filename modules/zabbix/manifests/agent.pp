@@ -16,6 +16,7 @@ $hostname) {
 
   service { 'zabbix_agent':
     enable  => true,
+    ensure  => running,
     require => Class[$zabbix::params::agent_service_module],
   }
 
