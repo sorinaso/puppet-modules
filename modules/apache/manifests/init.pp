@@ -1,6 +1,7 @@
 class apache(
+$ensure = present,
 $package = $apache::params::package,
-$package_ensure = 'installed',
+$package_ensure = $ensure,
 $service = $apache::params::service,
 $service_enable = true,
 $service_ensure = running,
@@ -11,7 +12,7 @@ $conf_template = undef
       ensure => $package_ensure,
   }
 
-  if !$service_external {
+  if !$service_external and $ensure == present {
     service { $service:
       ensure  => $service_ensure,
       enable  => $service_enable,
