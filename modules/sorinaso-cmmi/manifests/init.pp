@@ -111,10 +111,7 @@ $rm_build_folder = true) {
     exec { "remove-${name}-build-folder":
       cwd     => $cwd,
       command => "${cmmi::params::rm_cmd} -rf ${src_path}",
-      require => $post_cmd ? {
-        false   => Exec["cmmi-make-install-${name}"],
-        default => Exec["cmmi-${name}-post-cmd"]
-      }
+      require =>  Exec["cmmi-make-install-${name}"],
     }
   }
 }
