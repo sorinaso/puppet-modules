@@ -1,11 +1,7 @@
 name    'sorinaso-common'
 version '0.0.1'
-source 'https://github.com/sorinaso/puppet-modules'
+source 'https://github.com/sorinaso/puppet-modules/modules/sorinaso-common'
 author 'sorinaso'
 license 'Apache License, Version 2.0'
-summary 'Common for all my modules'
-description 'Common for all my modules'
-project_page 'https://github.com/sorinaso/puppet-modules'
-
-## Add dependencies, if any:
-# dependency 'username/name', '>= 1.2.0'
+summary 'Apache server module'
+project_page 'https://github.com/sorinaso/puppet-modules/modules/sorinaso-common'
