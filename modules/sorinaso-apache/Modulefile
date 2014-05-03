@@ -1,0 +1,7 @@
+name    'sorinaso-apache'
+version '0.0.1'
+source 'https://github.com/sorinaso/puppet-modules/modules/sorinaso-apache'
+author 'sorinaso'
+license 'Apache License, Version 2.0'
+summary 'Apache server module'
+project_page 'https://github.com/sorinaso/puppet-modules/modules/sorinaso-apache'
