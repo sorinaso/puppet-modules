@@ -3,11 +3,9 @@ $download = undef,
 $source = undef,
 $creates,
 $logoutput = on_failure,
-$pkg_folder ='',
-$pkg_format = "tar",
-$pkg_extension = "",
+$src_root_directory = "/usr/local/src",
+$src_directory = undef,
 $configure_cmd = "configure",
-$extractorcmd = "",
 $make_cmd = "/usr/bin/make && /usr/bin/make install",
 $rm_build_folder = true) {
   include cmmi::params
@@ -21,8 +19,6 @@ $rm_build_folder = true) {
     fail("Can't give download url and source")
   }
 
-  $cwd = "/usr/local/src"
-
   Exec {
     unless    => "${cmmi::params::test_cmd} -f $creates",
     user      => 'root',
@@ -35,7 +31,7 @@ $rm_build_folder = true) {
 
     # download source
     exec { "cmmi-download-${name}":
-      cwd     => $cwd,
+      cwd     => $src_root_directory,
       command => "${cmmi::params::wget_cmd} -q ${download}",
       timeout => 120, # 2 minutes
     }
@@ -53,32 +49,9 @@ $rm_build_folder = true) {
   }
 
 
-  $extension = $pkg_format ? {
-    zip     => ".zip",
-    bzip    => ".tar.bz2",
-    tar     => ".tar.gz",
-    default => $pkg_extension,
-  }
-
-  $foldername = $pkg_folder ? {
-    ''      => gsub($filename, $extension, ""),
-    default => $pkg_folder,
-  }
-
   $src_path  = "${cwd}/${foldername}"
 
-  $extractor = $pkg_format ? {
-    zip     => "${cmmi::params::unzip_cmd} -q -d ${cwd} ${cwd}/${filename}",
-    bzip    => "${cmmi::params::bunzip_cmd} -c ${cwd}/${filename} | ${cmmi::params::tar_cmd} -xf -",
-    tar     => "${cmmi::params::gunzip_cmd} < ${cwd}/${filename} | ${cmmi::params::tar_cmd} -xf -",
-    default => $extractorcmd,
-  }
-
-  # extract source
-  exec { "cmmi-extract-${name}":
-    cwd     => $cwd,
-    command => $extractor,
-    timeout => 120, # 2 minutes
+  cmmi::extract { $src_path:
     require => $download ? {
       undef   => File["${cwd}/${filename}"],
       default => Exec["cmmi-download-${name}"],
