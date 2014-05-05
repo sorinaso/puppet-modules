@@ -11,66 +11,79 @@ describe 'apache class:' do
     apply_manifest(pp)
   end
 
-  it "should install with service running" do
-    # Instalo
-    pp = "class { 'apache': }"
-    apply_manifest(pp, :expect_changes => true)
-    apply_manifest(pp, :catch_changes => true)
+  context "when no paramaters given" do
+    it "should run without errors" do
+      pp = "class { 'apache': }"
+      apply_manifest(pp, :expect_changes => true)
+      apply_manifest(pp, :catch_changes => true)
 
-    # El paquete debe estar instalado
-    package('apache2').should be_installed
+    end
 
-    # El servicio habilitado y corriendo.
-    service('apache2').should be_enabled
-    service('apache2').should be_running
+    describe package('apache2') do
+      it { should be_installed }
+    end
 
-    # El puerto 80 escuchando.
-    port(80).should be_listening
+    describe service('apache2') do
+      it { should be_enabled }
+      it { should be_running }
+    end
+
+    describe port(80) do
+      it { should be_listening }
+    end
   end
 
-  it "should install without service enabled or running" do
-    # Instalo
-    pp = <<-EOS
-    class { 'apache':
-      service_ensure => stopped,
-      service_enable => false,
-    }
-    EOS
+  context "when { service_ensure => stopped, service_enable => false}" do
+    it "should run without errors" do
+      pp = <<-EOS
+      class { 'apache':
+        service_ensure => stopped,
+        service_enable => false,
+      }
+      EOS
 
-    apply_manifest(pp, :expect_changes => true)
-    apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, :expect_changes => true)
+      apply_manifest(pp, :catch_changes => true)
+    end
 
-    # El paquete debe estar instalado
-    package('apache2').should be_installed
+    describe package('apache2') do
+      it { should be_installed }
+    end
 
-    # El servicio no debe estar habilitado ni corriendo.
-    service('apache2').should_not be_enabled
-    service('apache2').should_not be_running
+    describe service('apache2') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
 
-    # El puerto 80 no debe estar escuchando.
-    port(80).should_not be_listening
+    describe port(80) do
+      it { should_not be_listening }
+    end
   end
 
-  it "should uninstall" do
-    # Instalo
-    pp = <<-EOS
-    class { 'apache':
-      ensure => absent,
-    }
-    EOS
+  context "when { ensure => absent }" do
+    it "should run without errors" do
+      pp = <<-EOS
+      class { 'apache':
+        ensure => absent,
+      }
+      EOS
 
-    apply_manifest(pp, :expect_changes => true)
-    apply_manifest(pp, :catch_changes => true)
+      apply_manifest(pp, :expect_changes => true)
+      apply_manifest(pp, :catch_changes => true)
+    end
 
-    # El paquete debe estar instalado
-    package('apache2').should_not be_installed
+    describe package('apache2') do
+      it { should_not be_installed }
+    end
 
-    # El servicio no debe estar habilitado ni corriendo.
-    service('apache2').should_not be_enabled
-    service('apache2').should_not be_running
+    describe service('apache2') do
+      it { should_not be_enabled }
+      it { should_not be_running }
+    end
 
-    # El puerto 80 no debe estar escuchando.
-    port(80).should_not be_listening
+    describe port(80) do
+      it { should_not be_listening }
+    end
   end
 end
 
