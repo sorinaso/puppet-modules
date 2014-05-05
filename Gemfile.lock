@@ -83,12 +83,6 @@ GEM
       multi_json (>= 1.5)
     launchy (2.4.2)
       addressable (~> 2.3)
-    librarian (0.1.2)
-      highline
-      thor (~> 0.15)
-    librarian-puppet (1.0.1)
-      json
-      librarian (>= 0.1.2)
     log4r (1.1.10)
     mime-types (1.25.1)
     minitar (0.5.4)
@@ -142,7 +136,6 @@ PLATFORMS
 DEPENDENCIES
   beaker
   beaker-rspec
-  librarian-puppet
   puppet
   rake
   rake-admin!
