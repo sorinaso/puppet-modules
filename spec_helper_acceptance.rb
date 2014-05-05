@@ -44,8 +44,8 @@ def beaker_configuration(module_name, &block)
       end
 
       beaker_install_local_module(module_name)
-    end
 
-    yield c if block_given?
+      yield c if block_given?
+    end
   end
 end
