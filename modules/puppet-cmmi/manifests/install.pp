@@ -1,38 +1,16 @@
 define cmmi::install (
-$download = undef,
-$source = undef,
-$creates,
-$logoutput = on_failure,
-$compilation_directory,
-$src_directory = undef,
+$source,
+$target_src_directory,
+$target_src_filename,
+$target_src_directoryname,
 $configure_cmd = "configure",
 $make_cmd = "/usr/bin/make && /usr/bin/make install"
 $rm_build_folder = true) {
 include cmmi::params
 include cmmi::dependencies
+  $compilation_directory = dirname($target_directory)
 
-package { $cmmi::params::build_dependencies: }
-
-
-if $download == undef and $source == undef {
-  fail("Must give download url or source")
-}
-
-if $download and $source {
-  fail("Can't give download url and source")
-}
-
-Exec {
-  unless    => "${cmmi::params::test_cmd} -f $creates",
-  user      => 'root',
-  logoutput => $logoutput,
-  timeout   => 900,
-}
-
-if $download {
-  $filename = basename($download)
-
-  cmmi::download { $name
+  cmmi::download { $source:
     directory => $compilation_directory,
   }
 }

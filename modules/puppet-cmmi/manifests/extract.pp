@@ -1,5 +1,36 @@
+# == Class: example_class
+#
+# Extract the source code for compilation.
+#
+# === Parameters
+#
+# [*extension*]
+# Compression extension(.tar.gz and .tar.bz2 supported)
+#
+# [*command*]
+# Specific extract command(ignores extension)
+#
+# [*user*]
+# User that run commands.
+#
+# [*creates*]
+# Directory or file that extraction create(for idempotency)
+#
+# [*timeout*]
+# Command timeout.
+#
+# Document parameters here.
+#
+# === Variables
+#
+# === Examples
+#
+# === Authors
+#
+# Alejandro Souto <sorinaso@gmail.com>
+#
 define cmmi::extract(
-$extension,
+$extension = undef,
 $command = undef,
 $user,
 $creates,
@@ -9,19 +40,28 @@ $timeout = 120
   $directory = dirname($file)
   $filename = basename($file)
 
+  if $extension == undef and $command == undef {
+    fail("Must define extension or command.")
+  }
+
   # Command for extraction.
-  $extractor = $extension ? {
-    '.tar.bz2'    => "${cmmi::bunzip_cmd} -c ${file} | ${cmmi::tar_cmd} -xf -",
-    '.tar.gz'     => "${cmmi::gunzip_cmd} < ${file} | ${cmmi::tar_cmd} -xf -",
-    default => $command,
+  if $command {
+    $extractor = $command
+  } else {
+    case $extension {
+      '.tar.bz2': { $extractor = "${cmmi::bunzip_cmd} -c ${file} | ${cmmi::tar_cmd} -xf -" }
+      '.tar.gz': { $extractor = "${cmmi::gunzip_cmd} < ${file} | ${cmmi::tar_cmd} -xf -" }
+      default: { fail("Unsupported extension '${extension}'.") }
+    }
   }
 
   # Extract source.
   exec { "cmmi-extract-${file}":
-    cwd     => $directory,
-    command => $extractor,
-    creates => $creates,
-    timeout => $timeout,
+    cwd       => $directory,
+    command   => $extractor,
+    creates   => $creates,
+    timeout   => $timeout,
+    logoutput => on_failure,
   }
 
   Cmmi::Extract[$name] -> Class['cmmi']

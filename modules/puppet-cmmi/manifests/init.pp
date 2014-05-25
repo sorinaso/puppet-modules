@@ -7,4 +7,5 @@ $rm_cmd             = $cmmi::params::rm_cmd,
 $wget_cmd           = $cmmi::params::wget_cmd,
 $build_dependencies = $cmmi::params::build_dependencies
 ) inherits cmmi::params {
+  package { $build_dependencies: }
 }
