@@ -9,7 +9,7 @@ class cmmi::params {
       $rm_cmd       = '/bin/rm'
       $wget_cmd     = '/usr/bin/wget'
 
-      $build_dependencies  = 'build-essential'
+      $build_dependencies  = ['build-essential', 'autoconf']
     }
     default: { fail("${::operatinsystem} OS not supported.") }
   }
