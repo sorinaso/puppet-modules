@@ -118,4 +118,21 @@ describe 'cmmi::extract class:' do
       apply_manifest(pp, :expect_failures => true)
     end
   end
+
+  context "when extension and custom command" do
+    it "shouldn't run" do
+      pp = <<-EOS
+        class { 'cmmi': }
+
+        cmmi::extract { '#{test_targz_file}':
+          extension => '.tar.gz',
+          command   => '/bin/tar xvfz #{test_targz_file}',
+          user      => 'root',
+          creates   => '#{test_target_directory}',
+        }
+      EOS
+
+      apply_manifest(pp, :expect_failures => true)
+    end
+  end
 end

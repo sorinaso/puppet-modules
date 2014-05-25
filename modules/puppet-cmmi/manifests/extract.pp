@@ -1,14 +1,15 @@
 # == Class: example_class
 #
-# Extract the source code for compilation.
+# Extract the source code for compilation given an extension(tar.gz or tar.bz2)
+# or a custom command.
 #
 # === Parameters
 #
 # [*extension*]
-# Compression extension(.tar.gz and .tar.bz2 supported)
+# Compression extension(.tar.gz and .tar.bz2 supported).
 #
 # [*command*]
-# Specific extract command(ignores extension)
+# Specific extract command.
 #
 # [*user*]
 # User that run commands.
@@ -40,7 +41,9 @@ $timeout = 120
   $directory = dirname($file)
   $filename = basename($file)
 
-  if $extension == undef and $command == undef {
+  if ($extension == undef and $command == undef) or
+     ($extension != undef and $command != undef)
+  {
     fail("Must define extension or command.")
   }
 
