@@ -2,7 +2,6 @@ class cmmi::params {
   case $::operatingsystem {
     'Ubuntu': {
       $test_cmd     = "/usr/bin/test"
-      $unzip_cmd    = "/usr/bin/unzip"
       $tar_cmd      = "/bin/tar"
       $bunzip_cmd   = "/bin/bunzip2"
       $gunzip_cmd   = "/bin/gunzip"
