@@ -1,3 +1,0 @@
-- Agregar soporte de postgresql
-- Agregar soporte para parametrizacion de todos los datos en zabbix_agentconf, zabbix_agentd.conf y zabbix_server.conf
-- Separar agent de agentd
