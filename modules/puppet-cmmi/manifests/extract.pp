@@ -1,4 +1,4 @@
-# == Class: example_class
+# == Define Resource Type: example_class
 #
 # Extract the source code for compilation given an extension(tar.gz or tar.bz2)
 # or a custom command.

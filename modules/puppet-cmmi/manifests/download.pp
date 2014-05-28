@@ -1,4 +1,4 @@
-# == Class: example_class
+# == Define Resource Type: example_class
 #
 # Download a source for installation.
 #

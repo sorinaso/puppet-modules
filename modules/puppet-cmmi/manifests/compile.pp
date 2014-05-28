@@ -1,4 +1,4 @@
-# == Class: cmmi::compile
+# == Define Resource Type: cmmi::compile
 #
 # Compilation for cmmi given e source directory.
 #
