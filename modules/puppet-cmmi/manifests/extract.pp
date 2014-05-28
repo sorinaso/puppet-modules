@@ -5,6 +5,9 @@
 #
 # === Parameters
 #
+# [*file*]
+# File to extract.
+#
 # [*extension*]
 # Compression extension(.tar.gz and .tar.bz2 supported).
 #
@@ -31,13 +34,13 @@
 # Alejandro Souto <sorinaso@gmail.com>
 #
 define cmmi::extract(
+$file,
 $extension = undef,
 $command = undef,
 $user,
 $creates,
 $timeout = 120
 ) {
-  $file = $name
   $directory = dirname($file)
   $filename = basename($file)
 
@@ -59,7 +62,7 @@ $timeout = 120
   }
 
   # Extract source.
-  exec { "cmmi-extract-${file}":
+  exec { "cmmi-extract-${name}":
     cwd       => $directory,
     command   => $extractor,
     creates   => $creates,

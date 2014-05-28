@@ -11,7 +11,8 @@ describe 'cmmi::extract class:' do
       pp = <<-EOS
         class { 'cmmi': }
 
-        cmmi::extract { '#{test_tarbz2_file}':
+        cmmi::extract { 'test_extract':
+          file      => '#{test_tarbz2_file}',
           extension => '.tar.bz2',
           user      => 'root',
           creates   => '#{test_target_directory}',
@@ -40,7 +41,8 @@ describe 'cmmi::extract class:' do
       pp = <<-EOS
         class { 'cmmi': }
 
-        cmmi::extract { '#{test_targz_file}':
+        cmmi::extract { 'test_extract':
+          file      => '#{test_targz_file}',
           extension => '.tar.gz',
           user      => 'root',
           creates   => '#{test_target_directory}',
@@ -68,7 +70,8 @@ describe 'cmmi::extract class:' do
       pp = <<-EOS
         class { 'cmmi': }
 
-        cmmi::extract { '#{test_targz_file}':
+        cmmi::extract { 'test_extract':
+          file      => '#{test_targz_file}',
           command   => '/bin/tar xvfz #{test_targz_file}',
           user      => 'root',
           creates   => '#{test_target_directory}',
@@ -93,7 +96,8 @@ describe 'cmmi::extract class:' do
       pp = <<-EOS
         class { 'cmmi': }
 
-        cmmi::extract { '#{test_targz_file}':
+        cmmi::extract { 'test_extract':
+          file      => '#{test_targz_file}',
           extension => '.pirulito',
           user      => 'root',
           creates   => '#{test_target_directory}',
@@ -109,7 +113,8 @@ describe 'cmmi::extract class:' do
       pp = <<-EOS
         class { 'cmmi': }
 
-        cmmi::extract { '#{test_targz_file}':
+        cmmi::extract { 'test_extract':
+          file      =>'#{test_targz_file}',
           user      => 'root',
           creates   => '#{test_target_directory}',
         }
@@ -124,7 +129,8 @@ describe 'cmmi::extract class:' do
       pp = <<-EOS
         class { 'cmmi': }
 
-        cmmi::extract { '#{test_targz_file}':
+        cmmi::extract { 'test_extract':
+          file      =>'#{test_targz_file}',
           extension => '.tar.gz',
           command   => '/bin/tar xvfz #{test_targz_file}',
           user      => 'root',
