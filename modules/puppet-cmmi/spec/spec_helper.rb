@@ -2,7 +2,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'sp
 
 beaker_configuration('puppet-cmmi') do |c|
   beaker_install_local_module('puppet-common') if beaker_is_provisioning?
-  shell('apt-get install libevent-dev') if beaker_is_provisioning?
+  shell('apt-get install -y libevent-dev') if beaker_is_provisioning?
 end
 
 module SpecHelper
