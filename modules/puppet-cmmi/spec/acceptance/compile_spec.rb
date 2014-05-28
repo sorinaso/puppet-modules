@@ -41,8 +41,8 @@ describe 'cmmi class:' do
         class { 'cmmi': }
 
         cmmi::compile { 'redis':
-          directory       => '/tmp/redis-2.6.13',
-          creates         => '/usr/local/bin/redis-server',
+          directory       => '#{redis_src_directory}',
+          creates         => '#{redis_binaries[0]}',
           configure_cmd   => false,
         }
       EOS
@@ -72,8 +72,8 @@ describe 'cmmi class:' do
         class { 'cmmi': }
 
         cmmi::compile { 'redis':
-          directory       => '/tmp/redis-2.6.13',
-          creates         => '/usr/local/bin/redis-server',
+          directory       => '#{redis_src_directory}',
+          creates         => '#{redis_binaries[0]}',
           configure_cmd   => false,
           rm_build_folder => false,
         }
