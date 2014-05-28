@@ -15,6 +15,9 @@ describe 'cmmi class:' do
         cmmi::compile { 'memcached':
           directory       => '#{memcached_src_directory}',
           creates         => '#{memcached_binary}',
+          configure_cmd   => "#{memcached_src_directory}/configure",
+          make_cmd        => "/usr/bin/make && /usr/bin/make install",
+          timeout         => 600,
         }
       EOS
 
@@ -44,6 +47,8 @@ describe 'cmmi class:' do
           directory       => '#{redis_src_directory}',
           creates         => '#{redis_binaries[0]}',
           configure_cmd   => false,
+          make_cmd        => "/usr/bin/make && /usr/bin/make install",
+          timeout         => 600,
         }
       EOS
 
@@ -76,6 +81,8 @@ describe 'cmmi class:' do
           creates         => '#{redis_binaries[0]}',
           configure_cmd   => false,
           rm_build_folder => false,
+          make_cmd        => "/usr/bin/make && /usr/bin/make install",
+          timeout         => 600,
         }
       EOS
 

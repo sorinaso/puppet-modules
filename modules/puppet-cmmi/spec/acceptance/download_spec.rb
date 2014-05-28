@@ -15,6 +15,8 @@ describe 'cmmi::download class:' do
           url       => '#{test_url}',
           directory => '#{test_directory}',
           creates   => '#{test_directory}/#{test_file}',
+          user      => 'root',
+          timeout   => 120,
         }
       EOS
 

@@ -29,8 +29,8 @@ define cmmi::download(
 $url,
 $directory,
 $creates,
-$user = 'root',
-$timeout = 120,
+$user,
+$timeout
 ) {
   # download source
   exec { "cmmi-download-${name}-wget":

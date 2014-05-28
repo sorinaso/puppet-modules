@@ -39,7 +39,7 @@ $extension = undef,
 $command = undef,
 $user,
 $creates,
-$timeout = 120
+$timeout,
 ) {
   $directory = dirname($file)
   $filename = basename($file)

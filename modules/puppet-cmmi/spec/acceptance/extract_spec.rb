@@ -16,6 +16,7 @@ describe 'cmmi::extract class:' do
           extension => '.tar.bz2',
           user      => 'root',
           creates   => '#{test_target_directory}',
+          timeout   => 600,
         }
       EOS
 
@@ -46,6 +47,7 @@ describe 'cmmi::extract class:' do
           extension => '.tar.gz',
           user      => 'root',
           creates   => '#{test_target_directory}',
+          timeout   => 600,
         }
       EOS
 
@@ -75,6 +77,7 @@ describe 'cmmi::extract class:' do
           command   => '/bin/tar xvfz #{test_targz_file}',
           user      => 'root',
           creates   => '#{test_target_directory}',
+          timeout   => 600,
         }
       EOS
 
@@ -101,6 +104,7 @@ describe 'cmmi::extract class:' do
           extension => '.pirulito',
           user      => 'root',
           creates   => '#{test_target_directory}',
+          timeout   => 600,
         }
       EOS
 
@@ -117,6 +121,7 @@ describe 'cmmi::extract class:' do
           file      =>'#{test_targz_file}',
           user      => 'root',
           creates   => '#{test_target_directory}',
+          timeout   => 600,
         }
       EOS
 
@@ -135,6 +140,7 @@ describe 'cmmi::extract class:' do
           command   => '/bin/tar xvfz #{test_targz_file}',
           user      => 'root',
           creates   => '#{test_target_directory}',
+          timeout   => 600,
         }
       EOS
 

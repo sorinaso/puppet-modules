@@ -34,9 +34,9 @@
 define cmmi::compile (
 $directory,
 $creates,
-$configure_cmd = "${directory}/configure",
-$make_cmd = "/usr/bin/make && /usr/bin/make install",
-$timeout = 600,
+$configure_cmd,
+$make_cmd,
+$timeout,
 $rm_build_folder = true) {
   # Default paramaters for Exec
   Exec {
