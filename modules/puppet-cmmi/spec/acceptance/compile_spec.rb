@@ -18,6 +18,7 @@ describe 'cmmi class:' do
           configure_cmd   => "#{memcached_src_directory}/configure",
           make_cmd        => "/usr/bin/make && /usr/bin/make install",
           timeout         => 600,
+          user            => 'root',
         }
       EOS
 
@@ -49,6 +50,8 @@ describe 'cmmi class:' do
           configure_cmd   => false,
           make_cmd        => "/usr/bin/make && /usr/bin/make install",
           timeout         => 600,
+          user            => 'root',
+
         }
       EOS
 
@@ -67,7 +70,7 @@ describe 'cmmi class:' do
     end
   end
 
-  context "when compile redis { configure_cmd => false, rm_build_folder => false }" do
+  context "when compile redis { configure_cmd => false, rm_source_folder => false }" do
     it "should run without errors" do
       shell redis_clean_cmd
       shell redis_download_src_cmd
@@ -77,12 +80,13 @@ describe 'cmmi class:' do
         class { 'cmmi': }
 
         cmmi::compile { 'redis':
-          directory       => '#{redis_src_directory}',
-          creates         => '#{redis_binaries[0]}',
-          configure_cmd   => false,
-          rm_build_folder => false,
-          make_cmd        => "/usr/bin/make && /usr/bin/make install",
-          timeout         => 600,
+          directory         => '#{redis_src_directory}',
+          creates           => '#{redis_binaries[0]}',
+          configure_cmd     => false,
+          rm_source_folder  => false,
+          make_cmd          => "/usr/bin/make && /usr/bin/make install",
+          timeout           => 600,
+          user              => 'root',
         }
       EOS
 

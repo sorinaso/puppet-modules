@@ -1,4 +1,4 @@
-# == Define Resource Type: example_class
+# == Define Resource Type: cmmi::extract
 #
 # Extract the source code for compilation given an extension(tar.gz or tar.bz2)
 # or a custom command.

@@ -1,4 +1,4 @@
-# == Define Resource Type: example_class
+# == Define Resource Type: cmmi::download
 #
 # Download a source for installation.
 #

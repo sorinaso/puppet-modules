@@ -82,4 +82,26 @@ module SpecHelper
 
     def memcached_binary; '/usr/local/bin/memcached' end
   end
+
+  module Install
+    def test_directory; "/tmp" end
+
+    def download_url; "http://memcached.org/files/memcached-1.4.20.tar.gz" end
+
+    def download_filename; "memcached-1.4.20.tar.gz" end
+
+    def compilation_source_folder_name; "memcached-1.4.20" end
+
+    def compilation_source_path; File.join(self.test_directory, "memcached-1.4.20") end
+
+    def compilation_configure_cmd; File.join(compilation_source_path, "configure") end
+
+    def compilation_make_cmd; "/usr/bin/make && /usr/bin/make install" end
+
+    def compilation_creates; '/usr/local/bin/memcached' end
+
+    def extract_extension; ".tar.gz" end
+
+    def clean_cmd; "rm -rf #{compilation_source_path} && rm -rf #{download_filename} rm -rf /usr/local/*/*" end
+  end
 end

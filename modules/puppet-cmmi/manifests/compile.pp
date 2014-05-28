@@ -19,7 +19,7 @@
 # [*timeout*]
 # Timeout for commands.
 #
-# [*rm_build_folder*]
+# [*rm_source_folder*]
 # Remove build folder after compile?
 #
 # === Variables
@@ -34,13 +34,15 @@
 define cmmi::compile (
 $directory,
 $creates,
+$user,
 $configure_cmd,
 $make_cmd,
 $timeout,
-$rm_build_folder = true) {
+$rm_source_folder = true) {
   # Default paramaters for Exec
   Exec {
     timeout => $timeout,
+    user    => $user,
   }
 
   # Configure
@@ -64,7 +66,7 @@ $rm_build_folder = true) {
   }
 
   # Remove build folder
-  if $rm_build_folder {
+  if $rm_source_folder {
     exec { "cmmi-compile-${name}-rm-build-folder":
       command => "${cmmi::rm_cmd} -rf ${directory}",
       require =>  Exec["cmmi-compile-${name}-make-install"],
