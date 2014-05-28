@@ -26,15 +26,14 @@
 #
 
 define cmmi::download(
+$url,
 $directory,
 $creates,
 $user = 'root',
 $timeout = 120,
 ) {
-  $url = $name
-
   # download source
-  exec { "cmmi-download-wget-${name}":
+  exec { "cmmi-download-${name}-wget":
     cwd       => $directory,
     command   => "${cmmi::wget_cmd} -q ${url}",
     creates   => $creates,
