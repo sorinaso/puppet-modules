@@ -1,10 +1,18 @@
-class zabbix::server::service {
-  include zabbix::params
-  include $zabbix::params::server_service_module
+class zabbix::server::service(
+$ensure,
+$enable
+) {
+  file { $zabbix::server_service_file:
+    content => template($zabbix::server_service_template),
+    mode    => 755,
+    owner   => root,
+    group   => root,
+  } ->
 
   service { 'zabbix_server':
-    enable  => true,
-    ensure  => running,
-    require => Class[$zabbix::params::server_service_module],
+    enable => $enable,
+    ensure => $ensure,
   }
+
+  Class['::zabbix'] -> Class['::zabbix::server::service']
 }

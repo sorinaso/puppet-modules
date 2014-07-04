@@ -1,6 +1,10 @@
 class zabbix::params {
   case $::operatingsystem {
   'Ubuntu': {
+    # User and group.
+    $user = 'zabbix'
+    $group = 'zabbix'
+
     # Dependencies.
     $compilation_required_packages = ['automake']
     $mysql_required_packages = ['libmysqlclient-dev']
@@ -36,6 +40,8 @@ class zabbix::params {
     $server_conf_file  = "${etc_path}/zabbix_server.conf"
     $server_service_module = 'zabbix::server::service::ubuntu'
     $server_log_file = "${log_path}/zabbix_server.log"
+    $server_service_file = "/etc/init.d/zabbix_server"
+    $server_service_template = "zabbix/server/ubuntu.init_d.erb"
 
     # Mysql server.
     $mysql_server_required_packages = ['mysql-client']
@@ -61,7 +67,6 @@ class zabbix::params {
     # Apache.
     $php_frontend_apache_service = 'apache2'
   }
-
   default: { fail("${::operatingsystem} OS not supported.") }
   }
 }
