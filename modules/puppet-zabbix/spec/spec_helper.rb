@@ -34,13 +34,17 @@ module SpecHelper
 
   module Server
     module Service
-      def self.script_path; "/etc/init.d/zabbix_server" end
+      def self.name; 'zabbix-server' end
+
+      def self.script_path; "/etc/init.d/#{name}" end
 
       def self.script_user; "root" end
 
       def self.script_group; "root" end
 
       def self.script_mode; "root" end
+
+      def self.check_running_cmd; "pgrep zabbix-server" end
 
       def self.clean_cmd
         "rm -rf #{script_path}"
@@ -52,13 +56,18 @@ module SpecHelper
         find_cmd = "find /usr/local/src -name 'zabbix_server.conf'"
         check_cmd = "#{find_cmd}|egrep zabbix_server.conf"
         copy_cmd = "#{find_cmd} -exec cp '{}' /usr/local/etc/ \\;"
+        rm_log_file_cmd = "rm -rf #{log_file}"
 
-        "(#{check_cmd}) && (#{copy_cmd})"
+        "(#{check_cmd}) && (#{copy_cmd}) && (#{rm_log_file_cmd})"
       end
 
       def self.conf_file; "/usr/local/etc/zabbix_server.conf" end
 
       def self.log_file; "/var/log/zabbix_server_test.log" end
+
+      def self.log_file_user; "zabbix" end
+
+      def self.log_file_group; "zabbix" end
     end
 
     module MYSQL
