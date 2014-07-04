@@ -22,5 +22,10 @@ describe 'zabbix::server::config class:' do
     describe file(SpecHelper::Server::Config.conf_file) do
       it { should contain "LogFile=#{SpecHelper::Server::Config.log_file}" }
     end
+
+    describe file(SpecHelper::Server::Config.log_file) do
+      it { should be_owned_by SpecHelper::Server::Config.log_file_user }
+      it { should be_grouped_into SpecHelper::Server::Config.log_file_group }
+    end
   end
 end
