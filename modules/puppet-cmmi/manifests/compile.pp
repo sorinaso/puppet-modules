@@ -50,15 +50,16 @@ $rm_source_folder = true) {
     exec { "cmmi-compile-${name}-config":
       command => $configure_cmd,
       cwd     => $directory,
+      creates => $creates,
       unless  => "/usr/bin/test -f ${creates}",
     }
   }
 
-  # compile and install
+  # Compile and install
   exec { "cmmi-compile-${name}-make-install":
     command => "${make_cmd}",
     cwd     => $directory,
-    unless  => "/usr/bin/test -f ${creates}",
+    creates => $creates,
     require => $configure_cmd ? {
       false   => undef,
       default => Exec["cmmi-compile-${name}-config"],
