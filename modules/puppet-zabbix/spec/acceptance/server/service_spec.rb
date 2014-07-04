@@ -10,6 +10,10 @@ describe 'zabbix::server::service class:' do
       pp = <<-EOS
         class { 'zabbix': }
 
+        class { 'zabbix::server::config':
+          log_file => '#{SpecHelper::Server::Config::log_file}',
+        } ->
+
         class { 'zabbix::server::service':
           ensure  => running,
           enable  => true,
