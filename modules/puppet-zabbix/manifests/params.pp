@@ -40,7 +40,7 @@ class zabbix::params {
     $server_conf_file  = "${etc_path}/zabbix_server.conf"
     $server_service_module = 'zabbix::server::service::ubuntu'
     $server_log_file = "${log_path}/zabbix_server.log"
-    $server_service_file = "/etc/init.d/zabbix_server"
+    $server_service_file = "/etc/init.d/zabbix-server"
     $server_service_template = "zabbix/server/ubuntu.init_d.erb"
 
     # Mysql server.

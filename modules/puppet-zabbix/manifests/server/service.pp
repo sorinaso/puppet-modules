@@ -9,10 +9,10 @@ $enable
     group   => root,
   } ->
 
-  service { 'zabbix_server':
+  service { $zabbix::server_service_initd_service_name:
     enable => $enable,
     ensure => $ensure,
   }
 
-  Class['::zabbix'] -> Class['::zabbix::server::service']
+  Class['zabbix'] -> Class['zabbix::server::service']
 }

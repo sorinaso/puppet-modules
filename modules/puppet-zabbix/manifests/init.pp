@@ -14,7 +14,11 @@ $version = '2.2.3',
       $compilation_configure_cmd = "${compilation_src_path}/configure --enable-server --enable-agent --with-mysql"
       $compilation_rm_source_folder = false
       $compilation_required_packages = $mysql_required_packages
-      $server_service_initd_script = "${compilation_src_path}/misc/init.d/debian/zabbix-server"
+    }
+  }
+  case $::operatingsystem {
+    'Ubuntu': {
+      $server_service_initd_service_name = 'zabbix-server'
     }
   }
 

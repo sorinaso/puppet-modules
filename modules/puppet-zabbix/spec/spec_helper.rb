@@ -44,7 +44,7 @@ module SpecHelper
 
       def self.script_mode; "root" end
 
-      def self.check_running_cmd; "pgrep zabbix-server" end
+      def self.check_running_cmd; "pgrep zabbix_server" end
 
       def self.clean_cmd
         "rm -rf #{script_path}"
@@ -55,10 +55,11 @@ module SpecHelper
       def self.clean_cmd
         find_cmd = "find /usr/local/src -name 'zabbix_server.conf'"
         check_cmd = "#{find_cmd}|egrep zabbix_server.conf"
+        echo_no_server_conf_cmd = "echo 'zabbix_server.conf doesnt exists'"
         copy_cmd = "#{find_cmd} -exec cp '{}' /usr/local/etc/ \\;"
         rm_log_file_cmd = "rm -rf #{log_file}"
 
-        "(#{check_cmd}) && (#{copy_cmd}) && (#{rm_log_file_cmd})"
+        "((#{check_cmd}) && (#{copy_cmd})) | (#{echo_no_server_conf_cmd}) ; (#{rm_log_file_cmd})"
       end
 
       def self.conf_file; "/usr/local/etc/zabbix_server.conf" end
@@ -96,6 +97,36 @@ module SpecHelper
       def self.check_data_migrated_cmd; check_table_not_empty_cmd("users") end
 
       def self.check_images_migrated_cmd; check_table_not_empty_cmd("images") end
+
+      def mysql_pp
+        <<-EOS
+          class { 'mysql::server': } ->
+
+          mysql::db { '#{SpecHelper::Server::MYSQL.database}':
+             user     => '#{SpecHelper::Server::MYSQL.username}',
+             password => '#{SpecHelper::Server::MYSQL.password}',
+          }
+        EOS
+      end
+      def zabbix_pp(opts = {})
+
+        opts = { :service_ensure => 'running', service_enable => 'true' }.merge(opts)
+
+        <<-EOS
+        #{mysql_pp}
+
+        class { 'zabbix': } ->
+
+        class { 'zabbix::server':
+          service_enable    => #{opts[:service_enable]},
+          service_ensure    => #{opts[:service_ensure]},
+          database_provider => 'mysql',
+          database_name     => '#{SpecHelper::Server::MYSQL.database}',
+          database_user     => '#{SpecHelper::Server::MYSQL.username}',
+          database_password => '#{SpecHelper::Server::MYSQL.password}',
+        }
+        EOS
+      end
     end
   end
 end

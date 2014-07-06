@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'zabbix::server::mysql class:' do
-  context "when include" do
+  context "when include with service enabled and running" do
     it "should run without errors" do
       # Mysql install
       begin
@@ -24,26 +24,7 @@ describe 'zabbix::server::mysql class:' do
       shell SpecHelper::Server::Service.clean_cmd
       shell SpecHelper::Server::MYSQL.clean_cmd
 
-      # Instalo
-      pp = <<-EOS
-        class { 'mysql::server': } ->
-
-        mysql::db { '#{SpecHelper::Server::MYSQL.database}':
-           user     => '#{SpecHelper::Server::MYSQL.username}',
-           password => '#{SpecHelper::Server::MYSQL.password}',
-        } ->
-
-        class { 'zabbix': } ->
-
-        class { 'zabbix::server':
-          service_enable    => true,
-          service_ensure    => 'running',
-          database_provider => 'mysql',
-          database_name     => '#{SpecHelper::Server::MYSQL.database}',
-          database_user     => '#{SpecHelper::Server::MYSQL.username}',
-          database_password => '#{SpecHelper::Server::MYSQL.password}',
-        }
-      EOS
+      pp = SpecHelper::Server::MYSQL.pp(:service_ensure => 'running', service_enable => 'true')
 
       apply_manifest(pp, :expect_changes => true)
       apply_manifest(pp, :catch_changes => true)
@@ -77,8 +58,24 @@ describe 'zabbix::server::mysql class:' do
       it { should be_executable.by_user(SpecHelper::Server::Service.script_user) }
     end
 
-    describe command(SpecHelper::Server::Service.check_running_cmd) do
-      it { should return_exit_status 0 }
+    describe service(SpecHelper::Server::Service.name) do
+      it { should be_running }
+      it { should be_enabled }
+    end
+  end
+
+  context "when include with service disabled and stopped" do
+    it "should run without errors and disable servcices" do
+      # Instalo
+      pp = SpecHelper::Server::MYSQL.pp(:service_ensure => 'stopped', service_enable => 'false')
+
+      apply_manifest(pp, :expect_changes => true)
+      apply_manifest(pp, :catch_changes => true)
+    end
+
+    describe service(SpecHelper::Server::Service.name) do
+      it { should_not be_running }
+      it { should_not be_enabled }
     end
   end
 end
