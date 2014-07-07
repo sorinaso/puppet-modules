@@ -8,8 +8,8 @@ $zabbix_server_ip,
 $zabbix_server_port,
 $zabbix_server_name
 ) {
-  file { $zabbix::params::php_frontend_zabbix_conf_file:
-    content => template($zabbix::params::php_frontend_zabbix_conf_file_template),
+  file { $zabbix::php_frontend_zabbix_conf_file:
+    content => template($zabbix::php_frontend_zabbix_conf_file_template),
     owner   => root,
     group   => root,
     mode    => 644,
