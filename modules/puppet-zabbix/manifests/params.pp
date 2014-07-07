@@ -28,12 +28,20 @@ class zabbix::params {
 
     # Agent.
     $agent_bin  = "${sbin_path}/zabbix_agent"
-    $agentd_bin = "${sbin_path}/zabbix_agentd"
+    $agent_service_name = 'zabbix-agent'
+    $agent_service_file = "/etc/init.d/zabbix-agent"
+    $agent_service_template = "zabbix/agent/ubuntu.init_d.erb"
     $agent_conf_file  = "${etc_path}/zabbix_agent.conf"
+
+    # Agentd
+    $agentd_bin = "${sbin_path}/zabbix_agentd"
     $agentd_conf_file = "${etc_path}/zabbix_agentd.conf"
 
     # Server.
     $server_bin = "${sbin_path}/zabbix_server"
+    $server_service_name = 'zabbix-server'
+    $server_service_file = "/etc/init.d/zabbix-server"
+    $server_service_template = "zabbix/server/ubuntu.init_d.erb"
     $server_conf_file  = "${etc_path}/zabbix_server.conf"
     $server_log_file = "${log_path}/zabbix_server.log"
 

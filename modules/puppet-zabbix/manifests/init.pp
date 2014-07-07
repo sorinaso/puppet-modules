@@ -16,20 +16,6 @@ $version = '2.2.3',
       $compilation_required_packages = $mysql_required_packages
     }
   }
-  case $::operatingsystem {
-    'Ubuntu': {
-      # Server
-      $server_service_name = 'zabbix-server'
-      $server_service_file = "/etc/init.d/zabbix-server"
-      $server_service_template = "zabbix/server/ubuntu.init_d.erb"
-
-      # Agent.
-      $agent_service_name = 'zabbix-agent'
-      $agent_service_file = "/etc/init.d/zabbix-agent"
-      $agent_service_template = "zabbix/agent/ubuntu.init_d.erb"
-
-    }
-  }
 
   include zabbix::install
 }
