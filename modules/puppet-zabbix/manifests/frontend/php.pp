@@ -9,6 +9,8 @@ $zabbix_port   = '10051',
 $zabbix_name  = '',
 $timezone = 'UTC'
 ) {
+class { 'zabbix::frontend::php::dependencies': }
+
   include zabbix
   include zabbix::params
 

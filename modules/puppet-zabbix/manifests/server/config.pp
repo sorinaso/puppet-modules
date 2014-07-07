@@ -1,4 +1,6 @@
-class zabbix::server::config($log_file) {
+class zabbix::server::config(
+$log_file = $zabbix::server::log_file
+) {
   file { $log_file:
     ensure  => present,
     owner   => $zabbix::user,

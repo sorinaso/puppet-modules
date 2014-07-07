@@ -8,6 +8,16 @@ beaker_configuration('puppet-zabbix') do |c|
 end
 
 module SpecHelper
+  module Utils
+    def self.restore_conf_file(filename)
+      find_cmd = "find /usr/local/src -name '#{filename}'"
+      check_cmd = "#{find_cmd}|egrep #{filename}"
+      echo_no_conf_cmd = "echo '#{filename} doesnt exists'"
+      copy_cmd = "#{find_cmd} -exec cp '{}' /usr/local/etc/ \\;"
+
+      "((#{check_cmd}) && (#{copy_cmd})) || (#{echo_no_conf_cmd})"
+    end
+  end
   module Install
     def binaries
       [
@@ -44,8 +54,6 @@ module SpecHelper
 
       def self.script_mode; "root" end
 
-      def self.check_running_cmd; "pgrep zabbix_server" end
-
       def self.clean_cmd
         "rm -rf #{script_path}"
       end
@@ -53,13 +61,7 @@ module SpecHelper
 
     module Config
       def self.clean_cmd
-        find_cmd = "find /usr/local/src -name 'zabbix_server.conf'"
-        check_cmd = "#{find_cmd}|egrep zabbix_server.conf"
-        echo_no_server_conf_cmd = "echo 'zabbix_server.conf doesnt exists'"
-        copy_cmd = "#{find_cmd} -exec cp '{}' /usr/local/etc/ \\;"
-        rm_log_file_cmd = "rm -rf #{log_file}"
-
-        "((#{check_cmd}) && (#{copy_cmd})) | (#{echo_no_server_conf_cmd}) ; (#{rm_log_file_cmd})"
+        "(#{SpecHelper::Utils.restore_conf_file('zabbix_server.conf')}) ; (rm -rf #{log_file})"
       end
 
       def self.conf_file; "/usr/local/etc/zabbix_server.conf" end
@@ -98,7 +100,7 @@ module SpecHelper
 
       def self.check_images_migrated_cmd; check_table_not_empty_cmd("images") end
 
-      def mysql_pp
+      def self.mysql_pp
         <<-EOS
           class { 'mysql::server': } ->
 
@@ -108,9 +110,8 @@ module SpecHelper
           }
         EOS
       end
-      def zabbix_pp(opts = {})
-
-        opts = { :service_ensure => 'running', service_enable => 'true' }.merge(opts)
+      def self.zabbix_pp(opts = {})
+        opts = { :service_ensure => 'running', :service_enable => 'true' }.merge(opts)
 
         <<-EOS
         #{mysql_pp}
@@ -127,6 +128,46 @@ module SpecHelper
         }
         EOS
       end
+    end
+  end
+
+  module Agent
+    module Service
+      def self.name; 'zabbix-agent' end
+
+      def self.script_path; "/etc/init.d/#{name}" end
+
+      def self.script_user; "root" end
+
+      def self.script_group; "root" end
+
+      def self.script_mode; "root" end
+
+      def self.clean_cmd
+        "rm -rf #{script_path}"
+      end
+    end
+
+    module Config
+      def self.clean_cmd
+        rm_log_file_cmd = "rm -rf #{log_file}"
+        restore_agent_cmd = SpecHelper::Utils.restore_conf_file('zabbix_agent.conf')
+        restore_agentd_cmd = SpecHelper::Utils.restore_conf_file('zabbix_agentd.conf')
+
+        "#{restore_agent_cmd} ; #{restore_agentd_cmd} ; #{rm_log_file_cmd}"
+      end
+
+      def self.agent_conf_file; "/usr/local/etc/zabbix_agent.conf" end
+
+      def self.agentd_conf_file; "/usr/local/etc/zabbix_agentd.conf" end
+
+      def self.log_file; "/var/log/zabbix_agentd_test.log" end
+
+      def self.log_file_user; "zabbix" end
+
+      def self.log_file_group; "zabbix" end
+
+      def self.server_ip; "192.168.0.1" end
     end
   end
 end

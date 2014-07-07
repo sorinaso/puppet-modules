@@ -7,16 +7,7 @@ describe 'zabbix::server::mysql class:' do
       begin
         shell SpecHelper::Server::MYSQL.check_database_cmd
       rescue
-        pp = <<-EOS
-          class { 'mysql::server': } ->
-
-          mysql::db { '#{SpecHelper::Server::MYSQL.database}':
-             user     => '#{SpecHelper::Server::MYSQL.username}',
-             password => '#{SpecHelper::Server::MYSQL.password}',
-          }
-        EOS
-
-        apply_manifest(pp, :expect_changes => true)
+        apply_manifest(SpecHelper::Server::MYSQL.mysql_pp, :expect_changes => true)
       end
 
       # Clean
@@ -24,7 +15,10 @@ describe 'zabbix::server::mysql class:' do
       shell SpecHelper::Server::Service.clean_cmd
       shell SpecHelper::Server::MYSQL.clean_cmd
 
-      pp = SpecHelper::Server::MYSQL.pp(:service_ensure => 'running', service_enable => 'true')
+      pp = SpecHelper::Server::MYSQL.zabbix_pp(
+          :service_ensure => 'running',
+          :service_enable => 'true'
+      )
 
       apply_manifest(pp, :expect_changes => true)
       apply_manifest(pp, :catch_changes => true)
@@ -67,10 +61,19 @@ describe 'zabbix::server::mysql class:' do
   context "when include with service disabled and stopped" do
     it "should run without errors and disable servcices" do
       # Instalo
-      pp = SpecHelper::Server::MYSQL.pp(:service_ensure => 'stopped', service_enable => 'false')
+      pp = SpecHelper::Server::MYSQL.zabbix_pp(
+          :service_ensure => 'stopped',
+          :service_enable => 'false'
+      )
 
       apply_manifest(pp, :expect_changes => true)
       apply_manifest(pp, :catch_changes => true)
+    end
+
+    describe file(SpecHelper::Server::Service.script_path) do
+      it { should be_owned_by SpecHelper::Server::Service.script_user }
+      it { should be_grouped_into SpecHelper::Server::Service.script_group }
+      it { should be_executable.by_user(SpecHelper::Server::Service.script_user) }
     end
 
     describe service(SpecHelper::Server::Service.name) do

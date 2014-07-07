@@ -29,19 +29,13 @@ class zabbix::params {
     # Agent.
     $agent_bin  = "${sbin_path}/zabbix_agent"
     $agentd_bin = "${sbin_path}/zabbix_agentd"
-    $agent_service_module = 'zabbix::agent::service::ubuntu'
     $agent_conf_file  = "${etc_path}/zabbix_agent.conf"
-    $agent_conf_file_template = "zabbix/agent/zabbix_agent.conf.erb"
     $agentd_conf_file = "${etc_path}/zabbix_agentd.conf"
-    $agentd_conf_file_template = "zabbix/agent/zabbix_agentd.conf.erb"
 
     # Server.
     $server_bin = "${sbin_path}/zabbix_server"
     $server_conf_file  = "${etc_path}/zabbix_server.conf"
-    $server_service_module = 'zabbix::server::service::ubuntu'
     $server_log_file = "${log_path}/zabbix_server.log"
-    $server_service_file = "/etc/init.d/zabbix-server"
-    $server_service_template = "zabbix/server/ubuntu.init_d.erb"
 
     # Mysql server.
     $mysql_server_required_packages = ['mysql-client']
@@ -52,20 +46,7 @@ class zabbix::params {
     $php_frontend_lighttpd_conf_file = '/etc/lighttpd/lighttpd.conf'
     $php_frontend_zabbix_conf_file = "${share_php_frontend_path}/conf/zabbix.conf.php"
     $php_frontend_zabbix_conf_file_template = "zabbix/frontends/php/zabbix.conf.php.erb"
-    $php_frontend_apache_required_packages = ['apache2', 'php5', 'php5-gd', 'php5-mysql' ]
-
-    # Lighttpd.
-    $php_frontend_lighttpd_required_packages = ['php5-cgi', 'php5-gd', 'php5-mysql']
-    $php_frontend_lighttpd_required_modules = $::lsbdistrelease ? {
-      '10.04' => 'fastcgi',
-      default => ['fastcgi', 'fastcgi-php'],
-    }
-
-    #$php_frontend_lighttpd_required_modules = ['fastcgi', 'fastcgi-php']
-    $php_frontend_lighttpd_document_root = '/var/www'
-
-    # Apache.
-    $php_frontend_apache_service = 'apache2'
+    $php_frontend_required_packages = ['apache2', 'php5', 'php5-gd', 'php5-mysql' ]
   }
   default: { fail("${::operatingsystem} OS not supported.") }
   }

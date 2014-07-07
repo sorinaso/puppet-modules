@@ -18,7 +18,16 @@ $version = '2.2.3',
   }
   case $::operatingsystem {
     'Ubuntu': {
-      $server_service_initd_service_name = 'zabbix-server'
+      # Server
+      $server_service_name = 'zabbix-server'
+      $server_service_file = "/etc/init.d/zabbix-server"
+      $server_service_template = "zabbix/server/ubuntu.init_d.erb"
+
+      # Agent.
+      $agent_service_name = 'zabbix-agent'
+      $agent_service_file = "/etc/init.d/zabbix-agent"
+      $agent_service_template = "zabbix/agent/ubuntu.init_d.erb"
+
     }
   }
 

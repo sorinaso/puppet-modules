@@ -1,8 +1,9 @@
 class zabbix::server::mysql(
-$database_name,
-$database_user,
-$database_password,
-$migrate_initial_data = true) {
+$database_name = $zabbix::server::database_name,
+$database_user = $zabbix::server::database_user,
+$database_password = $zabbix::server::database_password,
+$migrate_initial_data = $zabbix::server::migrate_initial_data
+) {
   $mysql_migrate_sql_cmd = "/usr/bin/mysql -u ${database_user} -p'${database_password}' ${database_name}"
   $check_mysql_table_cmd = "/bin/echo 'show tables' | /usr/bin/mysql -u ${database_user} -p${database_password} ${database_name}|/bin/egrep"
   $schema_migrated_cmd = "${check_mysql_table_cmd} users"

@@ -1,6 +1,6 @@
 class zabbix::server::service(
-$ensure,
-$enable
+$ensure = $zabbix::server::service_ensure,
+$enable = $zabbix::server::service_enable
 ) {
   file { $zabbix::server_service_file:
     content => template($zabbix::server_service_template),
@@ -9,7 +9,7 @@ $enable
     group   => root,
   } ->
 
-  service { $zabbix::server_service_initd_service_name:
+  service { $zabbix::server_service_name:
     enable => $enable,
     ensure => $ensure,
   }
