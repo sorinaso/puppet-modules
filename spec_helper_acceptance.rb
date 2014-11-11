@@ -23,12 +23,17 @@ def beaker_install_local_module(module_name)
   )
 end
 
+def beaker_install_module(module_name)
+  shell("puppet module install #{module_name}")
+end
+
 def beaker_install_puppet
   shell('wget "https://apt.puppetlabs.com/puppetlabs-release-$(lsb_release -sc).deb" -O /tmp/puppet.deb')
   shell('dpkg -i /tmp/puppet.deb')
   shell('sudo apt-get update')
   shell('sudo apt-get -y install puppet')
 end
+
 def beaker_is_provisioning?
   ENV['BEAKER_provision'] != 'no'
 end
