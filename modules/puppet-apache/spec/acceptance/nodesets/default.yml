@@ -1,9 +1,0 @@
-HOSTS:
-  puppet-modules-apache:
-    platform: ubuntu-server-12042-x64
-    hypervisor: vagrant
-    box: panal-puppet-specs
-    box_url: http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210.box
-    ip: 192.168.2.98
-    distmoduledir : /etc/puppet/modules
-    host_name: apache.puppetmodules.com
