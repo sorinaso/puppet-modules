@@ -6,7 +6,7 @@ def beaker_module_name_without_org(module_name)
 end
 
 def beaker_local_module_path(module_name)
-  File.expand_path(File.join(File.dirname(__FILE__), 'modules', "#{module_name}"))
+  File.expand_path(File.join(File.dirname(__FILE__), '..', 'modules', "#{module_name}"))
 end
 
 def beaker_vm_module_path(module_name)
