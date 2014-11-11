@@ -12,8 +12,7 @@ class zabbix::params {
     # OS paths.
     $sbin_path = '/usr/local/sbin'
     $etc_path = '/usr/local/etc'
-    $php_ini_apache_path = '/etc/php5/apache2/php.ini'
-    $php_ini_cgi_path = '/etc/php5/cgi/php.ini'
+    $php_cgi_ini_file = '/etc/php5/cgi/php.ini'
     $log_path = '/var/log/zabbix'
     $www_dir  = ''
 
@@ -49,12 +48,8 @@ class zabbix::params {
     $mysql_server_required_packages = ['mysql-client']
 
     # PHP Frontend paths.
-    $php_frontend_apache_conf_file = '/etc/apache2/conf.d/zabbix.conf'
-    $php_frontend_apache_conf_file_template = "zabbix/frontends/php/apache.conf.erb"
-    $php_frontend_lighttpd_conf_file = '/etc/lighttpd/lighttpd.conf'
     $php_frontend_zabbix_conf_file = "${share_php_frontend_path}/conf/zabbix.conf.php"
     $php_frontend_zabbix_conf_file_template = "zabbix/frontends/php/zabbix.conf.php.erb"
-    $php_frontend_required_packages = ['apache2', 'php5', 'php5-gd', 'php5-mysql' ]
   }
   default: { fail("${::operatingsystem} OS not supported.") }
   }
