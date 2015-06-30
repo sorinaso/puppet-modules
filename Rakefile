@@ -6,6 +6,8 @@ namespace :beaker do
     modules_summary_log = []
     modules_summary_log << "Summary:\n\n"
 
+    some_failed = false
+
     Dir.glob("modules/*/spec/acceptance") do |f|
       module_directory = File.expand_path(f).gsub("/spec/acceptance", "")
       module_name = module_directory.split("/").last
@@ -19,6 +21,7 @@ namespace :beaker do
       end
 
       if failed
+        some_failed = true
         modules_summary_log << "#{module_name}...FAILED"
       else
         modules_summary_log << "#{module_name}...OK"
@@ -26,6 +29,8 @@ namespace :beaker do
     end
 
     puts modules_summary_log
+
+    fail if some_failed
   end
 end
 
