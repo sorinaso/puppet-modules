@@ -7,7 +7,7 @@ end
 namespace :beaker do
   desc "Corre los tests de beaker"
   task :test do
-    ENV['BEAKER_setfile'] ||= "/home/sorin/mis_proyectos/puppet/puppet-modules/spec_helper_acceptance/nodesets/default.yml"
+    ENV['BEAKER_setfile'] ||= File.join(File.dirname(__FILE__), 'nodesets', 'default.yml')
     ENV['BEAKER_provision'] ||= 'yes'
     ENV['BEAKER_destroy'] ||= 'yes'
 
