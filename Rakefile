@@ -13,7 +13,7 @@ namespace :beaker do
       failed = false
 
       begin
-        sh "cd #{module_directory} && BEAKER_provision=yes BEAKER_destroy=yes rake spec_system"
+        sh "cd #{module_directory} && BEAKER_provision=yes BEAKER_destroy=yes rake beaker:test"
       rescue
         failed = true
       end
