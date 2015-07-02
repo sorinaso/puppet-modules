@@ -9,6 +9,10 @@ describe 'admin::mail::gmail_send_only type:' do
       shell clean_cmd
 
       pp = <<-EOS
+        class {'apt': }
+
+        package { ['python-software-properties', 'software-properties-common']: } ->
+
         class {'admin::mail::gmail_send_only':
           admin_address   => '#{admin_address}',
           gmail_user      => '#{gmail_user}',

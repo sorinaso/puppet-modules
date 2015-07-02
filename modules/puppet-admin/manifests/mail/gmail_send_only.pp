@@ -1,12 +1,32 @@
+# == Class: admin::mail::gmail_send_only
+#
+# This class creates a smtp that relays GMail.
+#
+# === Parameters
+#
+# [*admin_address*]
+# The from email.
+#
+# [*gmail_user*]
+# GMail user.
+#
+# [*gmail_password*]
+# GMail password.
+#
+# === Variables
+#
+# === Examples
+#
+# === Authors
+#
+# Alejandro Souto <sorinaso@gmail.com>
+#
+
 class admin::mail::gmail_send_only(
 $admin_address,
 $gmail_user,
 $gmail_password
 ) {
-  class {'apt': }
-
-  package { ['python-software-properties', 'software-properties-common']: } ->
-
   apt::ppa { 'ppa:mikko-red-innovation/ppa': } ->
 
   class { '::nullmailer':
