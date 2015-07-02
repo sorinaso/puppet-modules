@@ -1,0 +1,12 @@
+name    'sorinaso-admin'
+version '0.0.1'
+source 'https://github.com/sorinaso/puppet-modules/modules/puppet-admin'
+author 'sorinaso'
+license 'Apache License, Version 2.0'
+summary 'My customized profiles'
+project_page 'https://github.com/sorinaso/puppet-modules/modules/puppet-admin'
+
+## Add dependencies, if any:
+dependency 'akumria/nullmailer'
+dependency 'puppetlabs/apt'
+
