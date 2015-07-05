@@ -1,0 +1,17 @@
+{
+    "name": "sorinaso-zabbix",
+    "version": "0.0.1",
+    "author": "sorinaso",
+    "license": "Apache-2.0",
+    "summary": "Module for compiling zabbix(server agent and php frontend)",
+    "source": "https://github.com/sorinaso/puppet-modules/tree/master/modules/puppet-zabbix",
+    "operatingsystem_support": [
+        {
+            "operatingsystem": "Ubuntu",
+            "operatingsystemrelease": [ "12.04" ]
+        }
+    ],
+    "dependencies": [
+        { "name": "puppetlabs/stdlib" },
+    ]
+}

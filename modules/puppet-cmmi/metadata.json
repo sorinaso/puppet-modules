@@ -1,0 +1,17 @@
+{
+    "name": "sorinaso-cmmi",
+    "version": "0.0.1",
+    "author": "sorinaso",
+    "license": "Apache-2.0",
+    "summary": "./configure && make && make install",
+    "source": "https://github.com/sorinaso/puppet-modules/tree/master/modules/puppet-cmmi",
+    "operatingsystem_support": [
+        {
+            "operatingsystem": "Ubuntu",
+            "operatingsystemrelease": [ "12.04" ]
+        }
+    ],
+    "dependencies": [
+        { "name": "puppetlabs/stdlib" },
+    ]
+}
