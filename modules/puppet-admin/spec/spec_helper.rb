@@ -1,9 +1,6 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'spec_helper_acceptance', 'spec_helper_acceptance'))
 
-beaker_configuration('puppet-admin') do |c|
-  beaker_install_module('akumria/nullmailer') if beaker_is_provisioning?
-  beaker_install_module('puppetlabs/apt') if beaker_is_provisioning?
-end
+AcceptanceTestEnvironment.start
 
 module SpecHelper
   module Mail

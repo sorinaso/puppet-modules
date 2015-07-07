@@ -1,12 +1,6 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'spec_helper_acceptance', 'spec_helper_acceptance'))
 
-beaker_configuration('puppet-zabbix') do |c|
-  beaker_install_local_module('puppet-cmmi')
-  beaker_install_local_module('puppet-common') if beaker_is_provisioning?
-  beaker_install_module('puppetlabs/stdlib') if beaker_is_provisioning?
-  beaker_install_module('puppetlabs/mysql') if beaker_is_provisioning?
-  beaker_install_module('puppetlabs/apache') if beaker_is_provisioning?
-end
+AcceptanceTestEnvironment.start
 
 module SpecHelper
   module Utils

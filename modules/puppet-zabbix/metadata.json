@@ -13,5 +13,9 @@
     ],
     "dependencies": [
         { "name": "puppetlabs/stdlib" },
+        { "name": "puppetlabs/mysql" },
+        { "name": "puppetlabs/apache" },
+        { "name": "sorinaso/cmmi" },
+        { "name": "sorinaso/common" }
     ]
 }

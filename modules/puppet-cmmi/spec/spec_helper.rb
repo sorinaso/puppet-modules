@@ -1,8 +1,7 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', '..', 'spec_helper_acceptance', 'spec_helper_acceptance'))
 
-beaker_configuration('puppet-cmmi') do |c|
-  beaker_install_local_module('puppet-common') if beaker_is_provisioning?
-  shell('apt-get install -y libevent-dev') if beaker_is_provisioning?
+AcceptanceTestEnvironment.start do |c|
+  shell('apt-get install -y libevent-dev') if AcceptanceTestEnvironment.is_provisioning?
 end
 
 module SpecHelper
