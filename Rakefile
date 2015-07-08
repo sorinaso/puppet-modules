@@ -34,19 +34,12 @@ namespace :beaker do
   end
 end
 
-namespace :librarian do
-  desc "Do a librarian-puppet install"
-  task :install do
-    sh "librarian-puppet install"
-  end
+desc "Corre el test de todos los modulos en el branch master de github"
+task :test_github_master do
+  modules_directory = "/tmp/puppet-modules"
 
-  desc "Do a librarian-puppet update"
-  task :update do
-    sh "librarian-puppet update"
-  end
-
-  desc "Do a librarian-puppet clean"
-  task :clean do
-    sh "librarian-puppet clean"
-  end
+  sh "rm -rf #{modules_directory}"
+  sh "cd /tmp && git clone https://github.com/sorinaso/puppet-modules.git"
+  sh "cd #{modules_directory} && rake beaker:test_all"
+  sh "rm -rf #{modules_directory}"
 end
