@@ -96,7 +96,7 @@ module AcceptanceTestEnvironment
       c.formatter = :documentation
 
       c.before :suite do
-        if true#AcceptanceTestEnvironment.is_provisioning?
+        if AcceptanceTestEnvironment.is_provisioning?
           AcceptanceTestEnvironment.install_puppet
 
           AcceptanceTestEnvironment.testing_module_metadata["dependencies"].each do |d|
