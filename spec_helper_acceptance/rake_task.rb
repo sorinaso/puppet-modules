@@ -10,6 +10,7 @@ namespace :beaker do
     ENV['BEAKER_setfile'] ||= File.join(File.dirname(__FILE__), 'nodesets', 'default.yml')
     ENV['BEAKER_provision'] ||= 'yes'
     ENV['BEAKER_destroy'] ||= 'yes'
+    ENV['SPEC_OPTS'] ||= '--color'
 
     Rake::Task['spec_system'].invoke()
   end
